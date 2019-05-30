@@ -217,6 +217,8 @@ func decodeLineOfMasterPlaylist(p *MasterPlaylist, state *decodingState, line st
 
 	line = strings.TrimSpace(line)
 
+	//fmt.Println(line)
+
 	switch {
 	case line == "#EXTM3U": // start tag first
 		state.m3u = true
@@ -228,6 +230,12 @@ func decodeLineOfMasterPlaylist(p *MasterPlaylist, state *decodingState, line st
 		}
 	case line == "#EXT-X-INDEPENDENT-SEGMENTS":
 		p.SetIndependentSegments(true)
+	case strings.HasPrefix(line, "#EXT-X-YOSPACE-ANALYTICS-URL:"):
+		_, err = fmt.Sscanf(line, "#EXT-X-YOSPACE-ANALYTICS-URL:%s", &p.Analytics)
+		if strict && err != nil {
+			return err
+		}
+		p.Analytics = strings.Trim(p.Analytics, `"`)
 	case strings.HasPrefix(line, "#EXT-X-MEDIA:"):
 		var alt Alternative
 		state.listType = MASTER

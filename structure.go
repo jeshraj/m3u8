@@ -148,6 +148,7 @@ type MasterPlaylist struct {
 	buf                 bytes.Buffer
 	ver                 uint8
 	independentSegments bool
+	Analytics           string //Yospace analytics URI
 }
 
 // This structure represents variants for master playlist.
