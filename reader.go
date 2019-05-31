@@ -217,8 +217,6 @@ func decodeLineOfMasterPlaylist(p *MasterPlaylist, state *decodingState, line st
 
 	line = strings.TrimSpace(line)
 
-	//fmt.Println(line)
-
 	switch {
 	case line == "#EXTM3U": // start tag first
 		state.m3u = true
@@ -742,6 +740,7 @@ func FullTimeParse(value string) (time.Time, error) {
 		"2006-01-02T15:04:05.999999999Z0700",
 		"2006-01-02T15:04:05.999999999Z07:00",
 		"2006-01-02T15:04:05.999999999Z07",
+		"2006-01-02T15:04:05.999999999", //Addition to support current YoSpace format without timezone info
 	}
 	var (
 		err error
